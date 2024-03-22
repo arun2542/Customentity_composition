@@ -1,0 +1,43 @@
+@EndUserText.label: 'custom entity for sales order items'
+@ObjectModel.query.implementedBy:'ABAP:ZCL_CUSTOM_ENTITY_UI'
+
+@UI.headerInfo: {
+    typeName: 'Sales Item',
+    typeNamePlural: 'Sales Items',
+    title: {
+        type: #STANDARD,
+        value: 'sales_order_item'
+    },
+    description: {
+        type: #STANDARD,
+        value: 'sales_order_item_text'
+    }
+}
+define custom entity ZCustom_entity_items
+
+{
+
+
+@UI.facet: [
+      // This is for the body
+      {
+        id: 'item',
+        purpose:#STANDARD,
+        type:#IDENTIFICATION_REFERENCE,
+        label:'Items',
+        position:10
+       }       
+        ]  
+@UI.identification: [{ position: 10 }]        
+@UI.lineItem: [{ position: 10 , label: 'SalesOrder' }]        
+  key  sales_order :  abap.char( 10);
+@UI.lineItem: [{ position: 20 , label: 'ItemNo' }]   
+ key   sales_order_item    : abap.char( 6 );
+ @UI.lineItem: [{ position: 30 , label: 'Category' }] 
+      sales_order_item_category : abap.char( 4 );
+@UI.lineItem: [{ position: 40, label: 'Description' }] 
+      sales_order_item_text  : abap.char( 40 );
+ _header : association to parent ZAPI_HUB_CUSTOM_ENTITY_RAP 
+ on $projection.sales_order = _header.sales_order;
+  
+}
