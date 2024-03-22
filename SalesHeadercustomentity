@@ -1,0 +1,55 @@
+@EndUserText.label: 'consume api business hub'
+@ObjectModel.query.implementedBy:'ABAP:ZCL_CUSTOM_ENTITY_UI'
+define root custom entity ZAPI_HUB_CUSTOM_ENTITY_RAP
+
+{
+
+ @UI.facet: [
+      // This is for the body
+      {
+        id: 'SalesOrder',
+        purpose:#STANDARD,
+        type:#IDENTIFICATION_REFERENCE,
+        label:'Sales Order',
+        position:10
+       },
+        {      
+       id:'item',
+       purpose: #STANDARD,
+       type: #LINEITEM_REFERENCE,
+       label: 'Items',
+       position:20,
+       targetElement:'_item'
+        
+       }
+        ]  
+@Search.defaultSearchElement: true
+@UI.identification: [{ position: 10 , label: 'Salesorder' }]
+@UI.selectionField: [{ position: 10 }]
+@UI.lineItem: [{ label: 'Sales Order No', position: 10 }]
+  key sales_order : abap.char( 10 ) ;
+@UI.identification: [{ position: 20 }]
+@UI.selectionField: [{ position: 20 }]
+@UI.lineItem: [{ label: 'Order Type', position: 20 }]
+   sales_order_type  : abap.char( 4 );
+
+@UI.lineItem: [{ label: 'Sales Org', position: 30 }]  
+   sales_organization : abap.char( 4 );
+ @UI.lineItem: [{ label: 'Sales District', position: 40}]  
+   sales_district : abap.char( 4 );
+ @UI.lineItem: [{ label: 'Sold To Party', position: 50}]    
+        sold_to_party   :     abap.char( 10 );
+ @UI.lineItem: [{ label: 'Creation date', position: 60}]  
+        creation_date   :abap.datn;
+ @UI.lineItem: [{ label: 'Created By', position: 70}]  
+        created_by_user  :     abap.char( 12 );
+ @UI.lineItem: [{ label: 'Last Change Date', position: 80} ]  
+        last_change_date :  datn;
+   @UI.lineItem: [{ position: 80 },
+                 { type: #FOR_ACTION,
+                   dataAction: 'create_data' ,
+                   label: 'Create Data'}]       
+// @UI.lineItem: [{ label: 'Sender System', position: 90} ]  
+        sender_business_system_nam :abap.char( 60 );    
+ _item : composition [0..*] of ZCustom_entity_items ;
+} 
